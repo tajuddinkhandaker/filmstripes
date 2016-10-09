@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+/bower_components
+public/bower_components
+Homestead.yaml
+Homestead.json
+.env
+*.sublime-project
+*.sublime-workspace

@@ -1,0 +1,64 @@
+<link rel="import"
+    href="../../bower_components/polymer/polymer.html">
+<link rel="import"
+	href="../../bower_components/paper-card/paper-card.html">
+<link rel="import"
+	href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import"
+	href="../../bower_components/iron-image/iron-image.html">
+<link rel="import"
+	href="../../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="crystal-movie-poster">
+	<template>
+		<style is="custom-style">
+		  paper-card.movie-paper-card { 
+		  	@apply(--layout-vertical);
+		  	width: 250px;
+		  	height: 600px;
+		  }
+		  .movie-paper-card-content {
+		    @apply(--layout-flex);
+		    float: left;
+		  }
+		  .movie-paper-card-header {  @apply(--paper-font-headline);  }
+		  .movie-paper-card-name { color: var(--paper-grey-600); margin: 10px 0; }
+		  paper-icon-button.movie-paper-card-icon {
+		    --iron-icon-fill-color: white;
+		    --iron-icon-stroke-color: var(--paper-grey-600);
+		  }
+		</style>
+		<paper-card class="movie-paper-card" image="/images/posters/gi-joe-retaliation-2013.jpg">
+			<div class="movie-paper-card-content">
+				<div class="card-content">
+				  <div class="movie-paper-card-header">G.I. Joe - Retaliation</div>
+				  <div class="movie-paper-card-name">2013</div>
+				  <div>Casting: Rock, Bruce Willis</div>
+				</div>
+				<div class="card-actions">
+					<paper-icon-button class="movie-paper-card-icon" icon="star"></paper-icon-button>
+					<paper-icon-button class="movie-paper-card-icon" icon="star"></paper-icon-button>
+					<paper-icon-button class="movie-paper-card-icon" icon="star"></paper-icon-button>
+					<paper-icon-button class="movie-paper-card-icon" icon="star"></paper-icon-button>
+					<paper-icon-button class="movie-paper-card-icon" icon="star"></paper-icon-button>
+
+					<paper-button>Explore!</paper-button>
+					<paper-button>Download</paper-button>
+				</div>
+			</div>
+		</paper-card>
+	</template>
+
+	
+</dom-module>
+
+<script>
+  // register a new element called proto-element
+  Polymer({
+    is: "crystal-movie-poster",
+    // add a callback to the element's prototype
+    ready: function() {
+      // this.textContent = "I'm a " + this.is + ". Check out my prototype!"
+    }
+  });
+</script>
