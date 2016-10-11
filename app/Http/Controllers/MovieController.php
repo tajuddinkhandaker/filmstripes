@@ -39,8 +39,11 @@ class MovieController extends Controller
     {
     	if($request->ajax()){
             return "AJAX";
-        }
-        abort(404);
+        }        
+        $inputs = $request->only('title', 'release_year', 'genre');
+        //return $inputs;
+
+        return response()->json($request->all());
     }
 
     /**
@@ -50,6 +53,17 @@ class MovieController extends Controller
      */
     public function registerForm()
     {
-        return view('movie-register');
+        $genres = [
+            [ 'title' => 'Horror', 'value' => 'HORROR' ],
+            [ 'title' => 'Romantic', 'value' => 'ROMANTIC' ],
+            [ 'title' => 'Adventure', 'value' => 'ADVENTURE' ],
+        ];
+        $languages = [
+            [ 'title' => 'English', 'value' => 'HORROR' ],
+            [ 'title' => 'Hindi', 'value' => 'ROMANTIC' ],
+            [ 'title' => 'Bengali', 'value' => 'ADVENTURE' ],
+            [ 'title' => 'Korean', 'value' => 'KOREAN' ],
+        ];
+        return view('movie-register')->withGenres(collect($genres))->withLanguages(collect($languages));
     }
 }

@@ -108,6 +108,7 @@
 
     <div class="container">
         @include('includes.flash')
+        <crystal-error-stripe id="error-stripe"></crystal-error-stripe>
     </div>
 
     @yield('content')

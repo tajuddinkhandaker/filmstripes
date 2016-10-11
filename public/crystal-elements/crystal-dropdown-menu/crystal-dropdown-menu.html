@@ -1,0 +1,53 @@
+<link rel="import"
+    href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="crystal-dropdown-menu">
+    <template>
+	<paper-dropdown-menu label="[[ label ]]" name="[[ name ]]" id="[[ id ]]">
+		<paper-listbox class="dropdown-content" selected="{{ selected }}">
+            <template is="dom-repeat" items="{{ dataset }}">
+				<paper-item value="[[ item.value ]]">[[ item.title ]]</paper-item>
+   			</template>
+		</paper-listbox>
+	</paper-dropdown-menu>
+    </template>
+</dom-module>
+
+<script>
+  // register a new element called proto-element
+  Polymer({
+    is: "crystal-dropdown-menu",
+    properties: {
+    	selected: {
+            type: Number,
+            notify: true,
+            reflectToAttribute: true,
+            value: 0
+    	},
+        dataset: {
+            type: Array,
+            notify: true,
+            reflectToAttribute: true,
+            value: []  
+        },
+        label: {
+            type: String,
+            notify: true,
+            reflectToAttribute: true,
+            value: ''  
+        },
+        value: {
+            type: Number,
+            computed: 'getValue(selected)'
+        },
+        name: String,
+        id: String,
+        getValue: function(selected) {
+            return selected;
+        }
+    },
+    // add a callback to the element's prototype
+    ready: function() {
+    }
+  });
+</script>

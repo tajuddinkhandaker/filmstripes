@@ -2,6 +2,8 @@
 
 @section('title', 'New Movie')
 
+@section('error-stripe')
+
 @section('content')
 <div class="container spark-screen filmstripes-container">
     <div class="row">
@@ -17,40 +19,35 @@
 
                 <div class="panel-body">
 
-                    <form is="iron-form" method="post" action="{{ route('movies::register') }}" id="presubmit">
+                    <form is="iron-form" method="post" action="{{ route('movies::register') }}" id="movie_register_form">
 
                         {{ csrf_field() }}
 
-                        <paper-input-container name="title" id="title_container" required char-counter autocorrect>
+                        <paper-input-container id="title_container" required char-counter autocorrect>
                           <label>Title</label>
-                          <input is="iron-input" id="title" maxlength="20">
+                          <input is="iron-input" name="title" id="title" maxlength="20">
                           <paper-input-char-counter></paper-input-char-counter>
                           <paper-icon-button suffix onclick="clearInput('title')" icon="clear" alt="clear" title="clear"></paper-icon-button>
                         </paper-input-container>
 
                         <div class="mdl-grid">
                           <div class="mdl-cell mdl-cell--2-col">
-                            <paper-input-container name="release_year" required auto-validate>
+                            <paper-input-container id="release_year_container" required auto-validate>
                                 <label>Release year</label>
-                                <input is="iron-input" pattern="[0-9]{4}">
+                                <input is="iron-input" name="release_year" id="release_year" pattern="[0-9]{4}">
                                 <paper-input-error>Wrong year! Please check again.</paper-input-error>
                             </paper-input-container>
                           </div>
                           <div class="mdl-cell mdl-cell--2-col">
-                            <paper-dropdown-menu name="genre" label="Genre">
-                              <paper-listbox class="dropdown-content" selected="1">
-                                <paper-item>Horror</paper-item>
-                                <paper-item>Adventure</paper-item>
-                                <paper-item>Romantic</paper-item>
-                                <paper-item>Sci-Fi</paper-item>
-                              </paper-listbox>
-                            </paper-dropdown-menu>
+                            <crystal-dropdown-menu  id="genre" name="genre" label="Genre" selected="1"
+                                                    dataset="{{ $genres }}">
+                            </crystal-dropdown-menu>
                           </div>
                           <div class="mdl-cell mdl-cell--2-col">
-                            <paper-input-container name="length" auto-validate>
+                            <paper-input-container auto-validate>
                               <div suffix>mins</div>
                               <label>Length</label>
-                              <input is="iron-input" pattern="[0-9]*">
+                              <input is="iron-input" name="length" id="length" pattern="[0-9]*">
                               <paper-input-error>Only numbers!<br/>e.g. 120 mins</paper-input-error>
                             </paper-input-container>
                           </div>
@@ -63,15 +60,9 @@
                             </paper-input-container>
                           </div>
                           <div class="mdl-cell mdl-cell--2-col">
-                            <paper-dropdown-menu name="language" label="Language">
-                              <paper-listbox class="dropdown-content">
-                                <paper-item>English</paper-item>
-                                <paper-item>Bengali</paper-item>
-                                <paper-item>Hindi</paper-item>
-                                <paper-item>Chinese</paper-item>
-                                <paper-item>Korean</paper-item>
-                              </paper-listbox>
-                            </paper-dropdown-menu>
+                            <crystal-dropdown-menu  id="language" name="language" label="Language" selected="1"
+                                                    dataset="{{ $languages }}">
+                            </crystal-dropdown-menu>
                           </div>
                           <div class="mdl-cell mdl-cell--2-col">
                             <paper-input-container name="size" auto-validate>
@@ -146,22 +137,39 @@
                         }
 
                         function _submit(event) {
-                            spinner.active = true;
-                            spinner.hidden = false;
+                            // spinner.active = true;
+                            // spinner.hidden = false;
                             Polymer.dom(event).localTarget.parentElement.submit();
                         }
                         function _reset(event) {
                             var form = Polymer.dom(event).localTarget.parentElement;
                             form.reset();
-                            form.querySelector('.output').innerHTML = '';
+                            // form.querySelector('.output').innerHTML = '';
+                            // spinner.active = false;
+                            // spinner.hidden = true;
                         }
-                        presubmit.addEventListener('iron-form-presubmit', function(event) {
-                            this.request.params['sidekick'] = 'Robin';
-                        });
-                        presubmit.addEventListener('iron-form-submit', function(event) {
-                            spinner.active = false;
-                            spinner.hidden = true;
+                        // movie_register_form.addEventListener('iron-form-presubmit', function(event) {
+                        //     // this.request.params['sidekick'] = 'Robin';
+                        // });
+                        movie_register_form.addEventListener('iron-form-submit', function(event) {
+                            // spinner.active = false;
+                            // spinner.hidden = true;
                             this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+                            movie_register_form.reset();
+                        });
+                        movie_register_form.addEventListener('iron-form-error', function(event) {
+                            // $('.output').attr('display' ,'block');
+                            // document.querySelector('div.output').innerHTML = '<div class="alert alert-error">' + JSON.stringify(event.detail) + '</div>';
+                            // console.log(event.detail);
+                            var errorStripe = document.querySelector('div#error-stripe');
+                            errorStripe.setAttribute("errorType", "error");
+                            errorStripe.setAttribute("errorText", "Your movie is not added due to some server error! Please try again.");
+                        });
+                        movie_register_form.addEventListener('iron-form-response', function(event) {
+                            // console.log(event.detail);
+                            var errorStripe = document.querySelector('div#error-stripe');
+                            errorStripe.setAttribute("errorType", "success");
+                            errorStripe.setAttribute("errorText", "You have added a new movie successfully!");
                         });
                     </script>
 
