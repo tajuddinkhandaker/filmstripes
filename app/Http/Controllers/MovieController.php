@@ -38,9 +38,9 @@ class MovieController extends Controller
     public function register(MovieRequest $request)
     {
     	if($request->ajax()){
-            return "AJAX";
+            return response()->json($request->all());
         }        
-        $inputs = $request->only('title', 'release_year', 'genre');
+        $inputs = $request->only('genre');
         //return $inputs;
 
         return response()->json($request->all());
@@ -59,11 +59,26 @@ class MovieController extends Controller
             [ 'title' => 'Adventure', 'value' => 'ADVENTURE' ],
         ];
         $languages = [
-            [ 'title' => 'English', 'value' => 'HORROR' ],
-            [ 'title' => 'Hindi', 'value' => 'ROMANTIC' ],
-            [ 'title' => 'Bengali', 'value' => 'ADVENTURE' ],
+            [ 'title' => 'English', 'value' => 'ENGLISH' ],
+            [ 'title' => 'Hindi', 'value' => 'HINDI' ],
+            [ 'title' => 'Bengali', 'value' => 'BENGALI' ],
             [ 'title' => 'Korean', 'value' => 'KOREAN' ],
         ];
-        return view('movie-register')->withGenres(collect($genres))->withLanguages(collect($languages));
+        $boxsets = [
+            [ 'title' => 'Iron Man', 'value' => 'IRONMAN' ],
+            [ 'title' => 'Avengers', 'value' => 'AVENGERS' ],
+            [ 'title' => 'Captain Ameraica', 'value' => 'CPT_AMERICA' ],
+            [ 'title' => 'Batman', 'value' => 'BATMAN' ],
+            [ 'title' => 'Spider Man 2', 'value' => 'SPIDERMAN2' ],
+        ];
+        $dvds = [
+            [ 'title' => 'Horror 5', 'value' => 'HORROR_5' ],
+            [ 'title' => 'Action + Adventure 3', 'value' => 'ACT_ADV_3' ],
+            [ 'title' => 'ANIMATION 3', 'value' => 'ANIM_3' ],
+        ];
+        return view('movie-register')->withGenres(collect($genres))
+                                     ->withLanguages(collect($languages))
+                                     ->withBoxsets(collect($boxsets))
+                                     ->withDvds(collect($dvds));
     }
 }

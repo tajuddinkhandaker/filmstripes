@@ -3,10 +3,10 @@
 
 <dom-module id="crystal-dropdown-menu">
     <template>
-	<paper-dropdown-menu label="[[ label ]]" name="[[ name ]]" id="[[ id ]]">
-		<paper-listbox class="dropdown-content" selected="{{ selected }}">
+	<paper-dropdown-menu label="[[ label ]]" name$="[[ name ]]">
+		<paper-listbox class="dropdown-content" selected="{{ selectedIndex }}">
             <template is="dom-repeat" items="{{ dataset }}">
-				<paper-item value="[[ item.value ]]">[[ item.title ]]</paper-item>
+				<paper-item>[[ item.title ]]</paper-item>
    			</template>
 		</paper-listbox>
 	</paper-dropdown-menu>
@@ -18,7 +18,8 @@
   Polymer({
     is: "crystal-dropdown-menu",
     properties: {
-    	selected: {
+        name: String,
+    	selectedIndex: {
             type: Number,
             notify: true,
             reflectToAttribute: true,
@@ -35,19 +36,15 @@
             notify: true,
             reflectToAttribute: true,
             value: ''  
-        },
-        value: {
-            type: Number,
-            computed: 'getValue(selected)'
-        },
-        name: String,
-        id: String,
-        getValue: function(selected) {
-            return selected;
         }
     },
     // add a callback to the element's prototype
     ready: function() {
+    },
+    attached: function () {
+        this.async(function () {
+            $('paper-dropdown-menu').attr('value', this.dataset[this.selectedIndex]);
+        });
     }
   });
 </script>

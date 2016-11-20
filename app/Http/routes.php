@@ -2,6 +2,8 @@
 
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Faker\Factory as DemoFaker;
+use Illuminate\Contracts\Logging\Log;
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -72,4 +74,25 @@ Route::get('/notepad', function () {
 Route::get('/languages', function()
 {
     return Languages::getList('en', 'json');
+});
+
+Route::get('/faker/name', function() {
+
+	$faker = DemoFaker::create();
+	$search = 'John';
+	session([ 'key' => $search ]); 
+	$nameValidator = function($company) {
+		return str_contains( strtolower((string) $company), strtolower(session('key')) );
+	};
+	$companies = array();
+	try
+	{
+		for ($i=0; $i < 10; $i++)
+			$companies []= $faker->valid($nameValidator)->company; //valid($nameValidator)->
+	} catch (\OverflowException $e) {
+	  return "Nothing to suggest! that contains " . session('key');
+	}
+
+	return $companies;
+
 });

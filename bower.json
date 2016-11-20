@@ -42,6 +42,8 @@
     "paper-item": "PolymerElements/paper-item#^1.2.1",
     "paper-checkbox": "PolymerElements/paper-checkbox#1.4.1",
     "paper-listbox": "PolymerElements/paper-listbox#^1.1.2",
-    "paper-spinner": "PolymerElements/paper-spinner#^1.2.1"
+    "paper-spinner": "PolymerElements/paper-spinner#^1.2.1",
+    "iron-form": "PolymerElements/iron-form#^1.1.4",
+    "iron-input": "PolymerElements/iron-input#^1.0.10"
   }
 }
